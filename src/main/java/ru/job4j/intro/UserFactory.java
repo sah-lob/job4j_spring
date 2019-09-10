@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserFactory {
 
-    Storage storage;
+    private final Storage storage;
 
     @Autowired
     public UserFactory(Storage storage) {
