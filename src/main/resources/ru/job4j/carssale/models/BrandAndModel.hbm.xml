@@ -1,0 +1,9 @@
+<hibernate-mapping>
+    <class name="ru.job4j.carssale.models.BrandAndModel" table="brands">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="brand" column="brand"/>
+        <property name="model" column="model"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,9 @@
+<hibernate-mapping>
+    <class name="ru.job4j.carssale.models.Image" table="images">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="carID" column="car_id"/>
+        <property name="image" column="image"/>
+    </class>
+</hibernate-mapping>

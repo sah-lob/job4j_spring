@@ -1,0 +1,14 @@
+<hibernate-mapping>
+    <class name="ru.job4j.carssale.models.Car" table="cars">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="brand" column="brand"/>
+        <property name="model" column="model"/>
+        <property name="price" column="price"/>
+        <property name="mechanicGear" column="mechanicGear"/>
+        <property name="power" column="power"/>
+        <property name="year" column="year"/>
+        <property name="owner" column="owner"/>
+    </class>
+</hibernate-mapping>

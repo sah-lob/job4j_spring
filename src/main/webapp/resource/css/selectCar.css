@@ -1,0 +1,46 @@
+img {
+    height: 480px;
+    width: 480px;
+    border-radius: 50px;
+}
+
+.colorText {
+    color: black; /* Красный цвет выделения */
+    font-weight: 600;
+}
+
+.wrapper {
+    width: 1200px;
+    text-align: center;
+    margin: auto;
+}
+
+.header {
+    background: white;
+    width: 1200px;
+    height: 150px;
+    text-align: center;
+    font-size: 100px;
+    margin: auto;
+}
+
+.img_с {
+    width: 40%;
+    height: 480px;
+    float: left;
+}
+
+.right_с {
+    padding: 50px;
+    float: right;
+    text-align: left;
+    width: 60%;
+    height: 480px;
+    font-size: 30px;
+    color: dimgrey;
+    /*background: blue;*/
+}
+
+.car_holder {
+    font-size: 40px;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Автомобиль</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./resource/css/selectCar.css">
+
+    <script>
+        $(
+            function() {
+                var urlParams = new URLSearchParams(window.location.search);
+                var id = urlParams.get('id');
+                var page = urlParams.get('page');
+
+
+                $.ajax(
+                    "select.do?id=" + id+ "&page=" + page).done(function (data) {
+                    var car = data[0].car;
+                    var brand = car.brand;
+                    var model = car.model;
+                    var price = car.price;
+                    var power = car.power;
+                    var year = car.year;
+                    var header = "<div class=\"header\" id=\"header\">\n" +
+                        brand + " " + model +
+                        "    </div>";
+                    $("#header").html(header);
+                    var gear;
+                    if (car.mechanicGear.value) {
+                        gear = "механическая"
+                    } else {
+                        gear = "автоматическая"
+                    }
+                    var body =
+                        "<span class=\"colorText\">" + "Цена: " + "</span>" + price + " <br> " +
+                        "<span class=\"colorText\">" +"Коробка : " + "</span>" + gear + " <br> " +
+                        "<span class=\"colorText\">" +"Мощность: " + power + "</span>" + " <br> " +
+                        "<span class=\"colorText\">" +"Год изготовления: " + "</span>" + year;
+                        // + "    </div>"
+                    $("#right_c").html(body);
+
+                    // alert(car.owner);
+                    var owner = car.owner;
+                    var phone = car.phone;
+                    var ownerBody =
+                        "<span class=\"colorText\">" + "Владелец: " + "</span>" + owner +
+                        "<span class=\"colorText\">" + " Номер телефона: " + "</span>" + phone;
+
+                    $("#car_holder").html(ownerBody);
+
+                    $.ajax("img.do?id=" + id).done(function (data) {
+                        var ncarimg = data[0].id;
+                        var result =
+                            "<p><img src=\""
+                            + "data:image/png\;base64," + ncarimg +
+                            "\" alt=\"Изображения машины нет.\"></p>"
+                        $("#img_с").html(result);
+                    });
+                });
+
+            }
+        );
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header" id="header">
+    </div>
+    <div class="img_с" id='img_с'>
+    </div>
+    <div class="right_с" id="right_c">
+    </div>
+    <div class="car_holder" id="car_holder">
+    </div>
+</div>
+</body>
+</html>

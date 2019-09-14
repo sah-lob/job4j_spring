@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Select a car</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./resource/css/main.css">
+    <script>
+
+        $(
+            function() {
+                updateCars(1);
+                var result =
+                    "<option value=\"-1\">Выберете сначала модель</option>\n";
+                $("#model").html(result);
+            }
+        );
+
+        function updateCars(page, carId, getBrand, getModel, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo) {
+            var toGetData = "&carID=" + carId
+                + "&brand=" + getBrand
+                + "&model=" + getModel
+                + "&priceFrom=" + priceFrom
+                + "&priceTo=" + priceTo
+                + "&korobka=" + korobka
+                + "&powerFrom=" + powerFrom
+                + "&powerTo=" + powerTo
+                + "&yearFrom=" + yearFrom
+                + "&yearTo=" + yearTo;
+            $.ajax(
+                "json.do?page=" + page
+                + toGetData).done(function (data) {
+                var resBody = "";
+
+                if (data.length != 0) {
+                    var len = data[0].len;
+                    if (carId != undefined && carId != "undefined") {
+                        carId = data[0].newId;
+                    } else {
+                        carId = "undefined";
+                    }
+                    for (var i = 0; i < data.length; ++i) {
+                        var car = data[i].car;
+                        var brand = car.brand;
+                        var model = car.model;
+                        var price = car.price;
+                        var mechanicGear = car.mechanicGear;
+                        var power = car.power;
+                        var year = car.year;
+                        resBody +=" <tr>\n" +
+                            "<td>\n" +
+                            "<div class=\"car_table\">\n" +
+                            "<div class=\"left_car_table\" id='ped" + car.id + "'>\n" +
+                            "</div>\n" +
+                            "<div onclick=\"window.location.href='selectCar.do?id="+ car.id + "&page=" + page + "'\" class=\"right_car_table\">\n" +
+                            "<h4>" + brand + " " + model + "</h4>\n" +
+                            "<h4>" + price  + " Р</h4>\n";
+                        unloadImage(car.id);
+                        if (mechanicGear == true) {
+                            resBody += "Ручная коробка передач<br>";
+                        } else {
+                            resBody += "Автоматическая коробка передач<br>";
+                        }
+                        resBody +=
+                            "Мощность "+ power +" л.с.<br>\n" +
+                            "Год выпуска: " + year + " г.\n" +
+                            "</div>\n" +
+                            "</div>\n" +
+                            "</td>\n" +
+                            "</tr>"
+                    }
+                } else {
+                    resBody = "<label>Машин с такими параметрами нет.</label>"
+                }
+                $("#tbody").html(resBody);
+                pagination(page, len, carId, getBrand, getModel, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo);
+            });
+        }
+
+        function unloadImage(id) {
+            $.ajax("img.do?id=" + id).done(function (data) {
+                var ncarimg = data[0].id;
+
+                var result = "<div class=\"left_car_table\" id='ped'>\n" +
+                "<p><img src=\""
+                + "data:image/png\;base64," + ncarimg +
+                "\" alt=\"Изображения машины нет.\"></p>" +
+                "</div>\n";
+                $("#ped" + id).html(result);
+            });
+        }
+
+        function pagination(page, lengthOfAllArray, carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo, toGetData) {
+            var num_of_pages = Math.ceil(lengthOfAllArray / 10);
+
+            // начало страниц
+            if (page <= 1) {
+                var result =
+                    "<li class=\"page-item disabled\">\n" +
+                    "<a class=\"page-link\" >Previous</a>\n" +
+                    "</li>\n";
+            } else {
+                var result = stringCreator((page - 1), carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo, "Previous");
+            }
+            // основная часть
+            if (num_of_pages >= 3) {
+                var flag = -1;
+                if (page == 1) {
+                    flag = page;
+                } else if (page >= num_of_pages) {
+                    flag = page - 2;
+                } else {
+                    flag = page - 1;
+                }
+                for (var i = 0; i < 3; i++) {
+                    if (flag == page) {
+                        result +=
+                            "<li class=\"page-item active\">" +
+                            "<a class=\"page-link\">"+ flag + "</a>" +
+                            "</li>";
+                    } else {
+                        result += stringCreator(flag, carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo, flag);
+                    }
+                    flag++;
+                }
+
+            } else {
+                for (var i = 0; i < num_of_pages; i++) {
+                    if (i == (page - 1)) {
+                        result +=
+                            "<li class=\"page-item active\">" +
+                            "<a class=\"page-link\">" + (i + 1) + "</a>" +
+                            "</li>";
+                    } else {
+                        result += stringCreator((i + 1), carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo,(i + 1));
+                    }
+                }
+            }
+            // завершение
+            if (page >= num_of_pages) {
+                result +=
+                    "<li class=\"page-item disabled\">\n" +
+                    "<a class=\"page-link\">Next</a>\n" +
+                    "</li>\n" +
+                    "";
+            } else {
+                result += stringCreator((page + 1), carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo, "Next");
+            }
+            $("#pagination").html(result);
+
+            brand2(brand);
+        }
+
+        function stringCreator(page, carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo, pageLabel) {
+            var result =
+                "<li class=\"page-item\">\n" +
+                "<a class=\"page-link\" href=\"#\" onclick='updateCars(" +
+                 page + "," +
+                "\"" + carId + "\"," +
+                "\"" + brand + "\"," +
+                "\"" + model + "\"," +
+                "\"" + priceFrom + "\"," +
+                "\"" + priceTo + "\"," +
+                "\"" + korobka + "\"," +
+                "\"" + powerFrom + "\"," +
+                "\"" + powerTo + "\"," +
+                "\"" + yearFrom + "\"," +
+                "\"" + yearTo + "\"" + ")'>" + pageLabel+ "</a>\n" +
+                "</li>\n";
+            return result;
+        }
+
+        function brand2(brand) {
+            var result;
+            $.ajax("brand.do").done(function (data) {
+                result = "<option value=\'-1\'>Не выбрано</option>\n";
+                if (data.length == 0) {
+                    brand2(brand);
+                }
+                for (var i = 0; i < data.length; ++i) {
+                    var bb = data[i].brand;
+                    var brand3 = bb.brand2;
+                    if(brand == brand3) {
+                        result +="<option value=\""+ brand3 + "\" selected>"+ brand3 +"</option>\n";
+                    } else {
+                        result +="<option value=\""+ brand3 + "\">"+ brand3 +"</option>\n";
+                    }
+                }
+                $("#brand").html(result);
+            });
+        }
+
+        function model(brand) {
+            var bb = brand.value.toString();
+            var result =
+                "<option value=\"-1\">Не выбрано</option>\n";
+            $.ajax("model.do?br=" + bb).done(function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    var bb = data[i].model;
+                    var model = bb.model2;
+                    result +="<option value=\""+ model + "\">"+ model +"</option>\n";
+                }
+                $("#model").html(result);
+            });
+        }
+
+        function checkMe() {
+            var page = 1;
+            var brand = document.getElementById("brand").value;
+            var model = document.getElementById("model").value;
+            var priceFrom = document.getElementById("priceFrom").value;
+            var priceTo = document.getElementById("priceTo").value;
+            var korobka = $("input:radio[name=rate]:checked").val();
+            var powerFrom = document.getElementById("powerFrom").value;
+            var powerTo = document.getElementById("powerTo").value;
+            var yearFrom = document.getElementById("yearFrom").value;
+            var yearTo = document.getElementById("yearTo").value;
+            var carId = -2;
+            var result = true;
+            if (result) {
+                updateCars(page, carId, brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo);
+            }
+        }
+
+        function freeData(brand, model, priceFrom, priceTo, korobka, powerFrom, powerTo, yearFrom, yearTo) {
+            var resut = false;
+            if ((brand == -1) && (model == -1)
+                && (priceFrom == "") && (priceTo == "")
+                && ((korobka == undefined) || (korobka == "n"))
+                && (powerFrom == "") && (powerTo == "")
+                && (yearFrom == "") && (yearTo == "")) {
+               resut = true;
+            }
+            return resut;
+        }
+
+        function validate(from, to) {
+            var result = true;
+            // if (from != "" || to != "") {
+            //     if (!/^[0-9]+$/.test(from)) {
+            //         result = false;
+            //     } else if (!/^[0-9]+$/.test(to)) {
+            //         result = false;
+            //     } else if (parseInt(from) > parseInt(to)) {
+            //         result = false;
+            //     }
+            // }
+            return result;
+        }
+
+    </script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="header">
+			Sah-lob cars
+		</div>
+		<div class="sidebar">
+            <div class="form-group">
+                <label>Марка:</label>
+                <select name="" class="form-control" id="brand" onchange="model(this);">
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Модель:</label>
+                <select class="form-control" id="model">
+                </select>
+            </div>
+
+            <form>
+                <label>Цена автомобиля</label>
+                <div class="price">
+                    <div class="minPrice">
+                        <input type="text" class="form-control" id="priceFrom" placeholder="от">
+                    </div>
+                    <div class="maxPrice">
+                        <input type="text" class="form-control" id="priceTo" placeholder="до">
+                    </div>
+                </div>
+            </form>
+
+            <br>
+            <label>Коробка передач</label>
+            <div id="korobka">
+                <input type="radio" id="r1" name="rate" value="m"> Механич.
+                <input type="radio" id="r2" name="rate" value="a"> Автомат.
+                <input type="radio" id="r3" name="rate" value="n"> Не важно
+            </div>
+            <br>
+            <form>
+                <label>Мощность (л.с.)</label>
+                <div class="price">
+                    <div class="minPrice">
+                        <input type="text" class="form-control" id="powerFrom"placeholder="от">
+                    </div>
+                    <div class="maxPrice">
+                        <input type="text" class="form-control" id="powerTo" placeholder="до">
+                    </div>
+                </div>
+            </form>
+            <br>
+            <form>
+                <label>Год выпуска</label>
+                <div class="price">
+                    <div class="minPrice">
+                        <input type="text" class="form-control" id="yearFrom"placeholder="от">
+                    </div>
+                    <div class="maxPrice">
+                        <input type="text" class="form-control" id="yearTo" placeholder="до">
+                    </div>
+                </div>
+            </form>
+            <br>
+            <button type="button" class="btn-success" id="findButton" onclick="checkMe()">Найти</button>
+            <br>
+            <br>
+            <button type="button" class="btn-success" id="newCar" onclick="window.location='newCar.do'">Добавить автомобиль</button>
+        </div>
+		<div class="main">
+            <div class="cars">
+            </div>
+            <table class="table table-bordered">
+                <tbody id="tbody">
+                </tbody>
+            </table>
+            <nav aria-label="...">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
+        </div>
+	</div>
+</body>
+</html>

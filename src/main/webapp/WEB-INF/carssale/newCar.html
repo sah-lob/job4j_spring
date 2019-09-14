@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Новый автомобиль</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="./resource/css/newcar.css">
+
+        <script>
+            function saveInfo() {
+                var brand = document.getElementById('brand').value;
+                var model = document.getElementById('model').value;
+                var price = document.getElementById('price').value;
+                var korobka = $("input:radio[name=rate]:checked").val();
+                var power = document.getElementById('power').value;
+                var year = document.getElementById('year').value;
+                var f = document.querySelector('input[type=file]').files[0];
+                var fio = document.getElementById('fio').value;
+                var phone = document.getElementById('phone').value;
+                var reader = new FileReader();
+                reader.onload = (function(theFile) {
+                    return function(e) {
+                        var binaryData = e.target.result;
+                        base64String = window.btoa(binaryData);
+                        uploadFile(base64String, brand, model, price, korobka, power, year, fio, phone);
+                    };
+                })(f);
+                reader.readAsBinaryString(f);
+            }
+
+            function uploadFile(base64String, brand, model, price, korobka, power, year, fio, phone) {
+                var date = "string=" + base64String
+                    + "&brand=" + brand
+                    + "&model=" + model
+                    + "&price=" + price
+                    + "&korobka=" + korobka
+                    + "&power=" + power
+                    + "&year=" + year
+                    + "&fio=" + fio
+                    + "&phone=" + phone;
+                $.ajax({
+                    method: "post",
+                    url: "new.do",
+                    data: date,
+                    success : function() {
+                        document.location.href = "index.do";
+                    }
+                });
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                Новая машина!
+            </div>
+            <div class="form">
+                <br>
+                <div class="brand">
+                    <input type="text" class="form-control" id="brand" placeholder="Марка">
+                </div>
+                <br>
+                <div class="model">
+                    <input type="text" class="form-control" id="model" placeholder="Модель">
+                </div>
+                <br>
+                <div class="price">
+                    <input type="text" class="form-control" id="price"  onkeyup = 'this.value=parseInt(this.value) | 0' placeholder="Цена">
+                </div>
+                <br>
+                <label>Коробка передач</label>
+                <div id="korobka">
+                    <input type="radio" id="r1" name="rate" value="m"> Механич.
+                    <input type="radio" id="r2" name="rate" value="a"> Автомат.
+                </div>
+                <br>
+                <div class="power">
+                    <input type="text" class="form-control" id="power" onkeyup = 'this.value=parseInt(this.value) | 0' placeholder="Мощность(л.с.)">
+                </div>
+                <br>
+                <div class="year">
+                    <input type="text" class="form-control" id="year" onkeyup = 'this.value=parseInt(this.value) | 0' placeholder="Год создания">
+                </div>
+                <br>
+                <br/>
+                <div class="form-group col-sm-6" style="padding-right: 10px; width: 102%; margin-left: -1.35%;">
+                    <label for="files"></label>
+                    <input type="file" name="files[]" id="files" class="form-control" data-filename-placement="inside" title="Загрузите фотографию машины." />
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="fio">
+                    <input type="text" class="form-control" id="fio" placeholder="Ваше имя">
+                </div>
+                <br>
+                <div class="phone">
+                    <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
+                </div>
+                <br>
+                <button type="button" class="btn-success" id="button" onclick="saveInfo()">Добавить автомобиль</button>
+            </div>
+        </div>
+    </body>
+</html>
