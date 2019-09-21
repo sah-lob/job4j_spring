@@ -108,9 +108,4 @@ public class CarController implements CarStoreController {
     public boolean editPerson(String login, String fio, String number) {
         return carStoreController.editPerson(login, fio, number);
     }
-
-    @Override
-    public void testList(int size) {
-        carStoreController.testList(size);
-    }
 }

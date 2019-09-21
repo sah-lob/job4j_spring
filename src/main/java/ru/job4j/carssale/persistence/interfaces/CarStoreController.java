@@ -1,11 +1,15 @@
 package ru.job4j.carssale.persistence.interfaces;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.job4j.carssale.models.Car;
 import ru.job4j.carssale.models.CarFilter;
 import ru.job4j.carssale.models.Image;
 import ru.job4j.carssale.models.Person;
 import java.util.List;
 
+@Component
 public interface CarStoreController {
 
     void addData(Car car, String img);
@@ -26,5 +30,4 @@ public interface CarStoreController {
     boolean validatePerson(Person person);
     Person getPerson(String login);
     boolean editPerson(String login, String fio, String number);
-    void testList(int size);
 }

@@ -1,9 +1,14 @@
 package ru.job4j.carssale.models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "brands")
 public class BrandAndModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String brand;
     private String model;

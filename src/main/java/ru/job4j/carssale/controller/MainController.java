@@ -3,7 +3,6 @@ package ru.job4j.carssale.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.job4j.carssale.models.Car;
@@ -32,8 +31,6 @@ public class MainController {
         var page = Integer.valueOf(req.getParameter("page"));
         var carId = req.getParameter("carID");
         boolean filterCarID = (carId.equals("undefined") || carId.equals(""));
-        //  Если нужен тестовый лист из машин.
-//          controller.testList(22);
         List<Car> cars;
         var newID = -2;
         CarFilter carFilter = null;
@@ -109,7 +106,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/brand", method = RequestMethod.GET)
-    public void brandGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void brandGet(HttpServletResponse resp) throws IOException {
         resp.setContentType("text/json");
         var pw = resp.getWriter();
         var brands = controller.getBrands();
@@ -227,7 +224,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public void newPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void newPost(HttpServletRequest req) throws ServletException, IOException {
         var image = req.getParameter("string");
         var brand = req.getParameter("brand");
         var model = req.getParameter("model");
@@ -245,22 +242,22 @@ public class MainController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String json(Model model) {
+    public String json() {
         return "login";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(HttpServletRequest req, HttpServletResponse resp) {
+    public String index() {
         return "index";
     }
 
     @RequestMapping(value = "/selectCar", method = RequestMethod.GET)
-    public String select(HttpServletRequest req, HttpServletResponse resp) {
+    public String select() {
         return "selectCar";
     }
 
     @RequestMapping(value = "/newCar", method = RequestMethod.GET)
-    public String newCar(HttpServletRequest req, HttpServletResponse resp) {
+    public String newCar() {
         return "newCar";
     }
 }

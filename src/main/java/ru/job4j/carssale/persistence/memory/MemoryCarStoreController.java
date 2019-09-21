@@ -30,7 +30,6 @@ public class MemoryCarStoreController implements CarStoreController {
     private MemoryUsersStore usersStore;
     private AtomicInteger id = new AtomicInteger(0);
 
-
     @Override
     public void addData(Car car, String img) {
         car.setId(id.getAndIncrement());
@@ -132,87 +131,86 @@ public class MemoryCarStoreController implements CarStoreController {
         return usersStore.editPerson(login, fio, number);
     }
 
-    @Override
-    public synchronized void testList(int size) {
-        if (carSize() == 0) {
-            for (int i = 0; i < size; i++) {
-                if (i % 2 == 0) {
-                    FileInputStream inputStream = null;
-                    try {
-                        inputStream = new FileInputStream("/Users/alexanderlobachev/Desktop/a.png");
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-                    while (true) {
-                        try {
-                            bytesRead = inputStream.read(buffer);
-                            if (!(bytesRead != -1)) {
-                                break;
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    byte[] imageBytes = outputStream.toByteArray();
-                    try {
-                        inputStream.close();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    String string = Base64.getEncoder().encodeToString(imageBytes);
-                    Person person = new Person();
-                    person.setLogin("loh");
-                    person.setFio("Александр Лобачев");
-                    person.setPassword("123");
-                    person.setPhone("8-916-633-58-00");
-                    Car car = new Car("Porshe", "Boxter",  6000000 + i, true, 650 + i, 2018 + i, person.getLogin());
-                    addPerson(person);
-                    addData(car, string);
-                } else {
-                    FileInputStream inputStream = null;
-                    try {
-                        inputStream = new FileInputStream("/Users/alexanderlobachev/Desktop/b.png");
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[4096];
-                    int bytesRead = -1;
-                    while (true) {
-                        try {
-                            bytesRead = inputStream.read(buffer);
-                            if (!(bytesRead != -1)) {
-                                break;
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    byte[] imageBytes = outputStream.toByteArray();
-                    try {
-                        inputStream.close();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    String string = Base64.getEncoder().encodeToString(imageBytes);
-                    Person person = new Person();
-                    person.setLogin("loh");
-                    person.setFio("Anna Inshakova");
-                    person.setPassword("123");
-                    person.setPhone("8-916-633-58-00");
-                    Car car = new Car("Ford", "Mondeo",  6000000 + i, false, 650 + i, 2018 + i, person.getLogin());
-                    addPerson(person);
-                    addData(car, string);
-                }
-            }
-        }
-    }
+//    public void testList(int size) {
+//        if (carSize() == 0) {
+//            for (int i = 0; i < size; i++) {
+//                if (i % 2 == 0) {
+//                    FileInputStream inputStream = null;
+//                    try {
+//                        inputStream = new FileInputStream("/Users/alexanderlobachev/Desktop/a.png");
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    byte[] buffer = new byte[4096];
+//                    int bytesRead = -1;
+//                    while (true) {
+//                        try {
+//                            bytesRead = inputStream.read(buffer);
+//                            if (!(bytesRead != -1)) {
+//                                break;
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        outputStream.write(buffer, 0, bytesRead);
+//                    }
+//                    byte[] imageBytes = outputStream.toByteArray();
+//                    try {
+//                        inputStream.close();
+//                        outputStream.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    String string = Base64.getEncoder().encodeToString(imageBytes);
+//                    Person person = new Person();
+//                    person.setLogin("loh");
+//                    person.setFio("Александр Лобачев");
+//                    person.setPassword("123");
+//                    person.setPhone("8-916-633-58-00");
+//                    Car car = new Car("Porshe", "Boxter",  6000000 + i, true, 650 + i, 2018 + i, person.getLogin());
+//                    addPerson(person);
+//                    addData(car, string);
+//                } else {
+//                    FileInputStream inputStream = null;
+//                    try {
+//                        inputStream = new FileInputStream("/Users/alexanderlobachev/Desktop/b.png");
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    byte[] buffer = new byte[4096];
+//                    int bytesRead = -1;
+//                    while (true) {
+//                        try {
+//                            bytesRead = inputStream.read(buffer);
+//                            if (!(bytesRead != -1)) {
+//                                break;
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        outputStream.write(buffer, 0, bytesRead);
+//                    }
+//                    byte[] imageBytes = outputStream.toByteArray();
+//                    try {
+//                        inputStream.close();
+//                        outputStream.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    String string = Base64.getEncoder().encodeToString(imageBytes);
+//                    Person person = new Person();
+//                    person.setLogin("loh");
+//                    person.setFio("Anna Inshakova");
+//                    person.setPassword("123");
+//                    person.setPhone("8-916-633-58-00");
+//                    Car car = new Car("Ford", "Mondeo",  6000000 + i, false, 650 + i, 2018 + i, person.getLogin());
+//                    addPerson(person);
+//                    addData(car, string);
+//                }
+//            }
+//        }
+//    }
 }
