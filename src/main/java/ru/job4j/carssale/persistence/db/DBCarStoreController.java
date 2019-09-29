@@ -223,7 +223,7 @@ public class DBCarStoreController implements CarStoreController {
 
     @Override
     public boolean userIsExists(String login) {
-        return usersStore.getPersonByLogin(login) != null;
+        return usersStore.getFirstPersonByLogin(login) != null;
     }
 
     @Override
@@ -238,12 +238,12 @@ public class DBCarStoreController implements CarStoreController {
 
     @Override
     public Person getPerson(String login) {
-        return usersStore.getPersonByLogin(login);
+        return usersStore.getFirstPersonByLogin(login);
     }
 
     @Override
     public boolean editPerson(String login, String fio, String number) {
-        Person person = usersStore.getPersonByLogin(login);
+        Person person = usersStore.getFirstPersonByLogin(login);
         person.setFio(fio);
         person.setPhone(number);
         usersStore.save(person);

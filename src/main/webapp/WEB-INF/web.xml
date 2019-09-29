@@ -11,8 +11,18 @@
         <param-value>
             WEB-INF/spring-context.xml
             WEB-INF/jpa-config.xml
+            WEB-INF/security.xml
         </param-value>
+
     </context-param>
+    <filter> <!-- Сам фильтр -->
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping> <!-- И где он будет работать -->
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
     <listener>
@@ -30,9 +40,9 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+
 </web-app>

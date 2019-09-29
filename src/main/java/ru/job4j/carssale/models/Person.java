@@ -16,6 +16,8 @@ public class Person {
     private String password;
     private String description;
     private String phone;
+    private boolean active;
+    private String role;
 
     public Person(String login, String fio, String password, String description, String phone) {
         this.login = login;
@@ -23,6 +25,7 @@ public class Person {
         this.password = password;
         this.description = description;
         this.phone = phone;
+        this.role = "ROLE_ADMIN";
     }
 
     public Person() {
@@ -75,6 +78,22 @@ public class Person {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

@@ -6,7 +6,7 @@ import ru.job4j.carssale.models.Person;
 @Repository
 public interface DBUsersRepository extends CrudRepository<Person, Integer> {
 
-    Person getPersonByLogin(String login);
+    Person getFirstPersonByLogin(String login);
 
     Person getPersonByLoginAndPassword(String login, String password);
 }

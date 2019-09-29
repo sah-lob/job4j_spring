@@ -2,15 +2,15 @@ package ru.job4j.carssale.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.carssale.models.Car;
 import ru.job4j.carssale.models.CarFilter;
 import ru.job4j.carssale.models.Person;
 import ru.job4j.carssale.persistence.CarController;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -88,10 +88,9 @@ public class MainController {
     }
 
     @RequestMapping(value = "/img", method = RequestMethod.GET)
-    public void imgGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void imgGet(@RequestParam(name = "id") String carId,  HttpServletResponse resp) throws IOException {
         resp.setContentType("text/json");
         var pw = resp.getWriter();
-        var carId = req.getParameter("id");
         var image = controller.getImg(Integer.parseInt(carId));
         var objectMapper = new ObjectMapper();
         var arrayJson = objectMapper.createArrayNode();
@@ -133,10 +132,9 @@ public class MainController {
     }
 
     @RequestMapping(value = "/model", method = RequestMethod.GET)
-    public void modelGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void modelGet(@RequestParam(name = "br") String brand, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/json");
         var pw = resp.getWriter();
-        var brand = req.getParameter("br");
         if (!brand.equals("-1")) {
             var models = controller.getModels(brand);
             var modelMap = new TreeMap<Integer, String>();
@@ -161,37 +159,6 @@ public class MainController {
             pw.flush();
         }
     }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            var sb = new StringBuilder();
-            try (var reader = req.getReader()) {
-                if (reader != null) {
-                    sb.append(reader.readLine());
-                }
-            }
-            var mapper = new ObjectMapper();
-            var person = mapper.readValue(sb.toString(), Person.class);
-            if (person.getDescription().equals("N")) {
-                if (controller.userIsExists(person.getLogin())) {
-                    var s = "Данный логин уже зарегистрирован.";
-                    resp.getWriter().write(s);
-                } else {
-                    controller.addPerson(person);
-                    req.getSession().setAttribute("login", person.getLogin());
-                }
-            } else {
-                if (controller.validatePerson(person)) {
-                    req.getSession().setAttribute("login", person.getLogin());
-                } else if (!controller.userIsExists(person.getLogin())) {
-                    var s = "Такого логина нет!";
-                    resp.getWriter().write(s);
-                } else {
-                    var s = "Неправильный пароль.";
-                    resp.getWriter().write(s);
-                }
-            }
-}
 
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     public void selectGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -224,7 +191,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public void newPost(HttpServletRequest req) throws ServletException, IOException {
+    public String newPost(HttpServletRequest req) {
         var image = req.getParameter("string");
         var brand = req.getParameter("brand");
         var model = req.getParameter("model");
@@ -235,15 +202,49 @@ public class MainController {
         var fio = req.getParameter("fio");
         var phone = req.getParameter("phone");
         image = image.replaceAll(" ", "+");
-        var login = req.getSession().getAttribute("login");
-        controller.editPerson(login.toString(), fio, phone);
-        var car = new Car(brand, model, price, korobka, power, year, login.toString());
+        var login = SecurityContextHolder.getContext().getAuthentication().getName();
+        controller.editPerson(login, fio, phone);
+        var car = new Car(brand, model, price, korobka, power, year, login);
         controller.addData(car, image);
+        return "index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String json() {
+    public String json(@RequestParam(value = "login1", required = false) String e, @RequestParam(value = "error", required = false) String error) {
+        if (error != null) {
+            System.out.println("ошибочка вышла");
+        }
         return "login";
+    }
+
+    @RequestMapping(value = "/loginValidate", method = RequestMethod.POST)
+    public void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        var sb = new StringBuilder();
+        try (var reader = req.getReader()) {
+            if (reader != null) {
+                sb.append(reader.readLine());
+            }
+        }
+        var mapper = new ObjectMapper();
+        var person = mapper.readValue(sb.toString(), Person.class);
+        if (person.getDescription().equals("N")) {
+            if (controller.userIsExists(person.getLogin())) {
+                var s = "Данный логин уже зарегистрирован.";
+                resp.getWriter().write(s);
+            } else {
+                controller.addPerson(person);
+            }
+        } else {
+            if (!controller.validatePerson(person)) {
+                if (!controller.userIsExists(person.getLogin())) {
+                    var s = "Такого логина нет!";
+                    resp.getWriter().write(s);
+                } else {
+                    var s = "Неправильный пароль.";
+                    resp.getWriter().write(s);
+                }
+            }
+        }
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
