@@ -1,6 +1,6 @@
 package ru.job4j.carssale.persistence.interfaces;
 
-import ru.job4j.carssale.models.Person;
+import ru.job4j.carssale.domain.Person;
 
 
 public interface UsersStore {

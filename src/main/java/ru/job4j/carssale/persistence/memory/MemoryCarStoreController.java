@@ -2,17 +2,12 @@ package ru.job4j.carssale.persistence.memory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.job4j.carssale.models.Car;
-import ru.job4j.carssale.models.CarFilter;
-import ru.job4j.carssale.models.Image;
-import ru.job4j.carssale.models.Person;
+import ru.job4j.carssale.domain.Car;
+import ru.job4j.carssale.domain.CarFilter;
+import ru.job4j.carssale.domain.Image;
+import ru.job4j.carssale.domain.Person;
 import ru.job4j.carssale.persistence.interfaces.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 

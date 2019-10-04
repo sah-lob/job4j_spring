@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.job4j.carssale.models.Car;
+import ru.job4j.carssale.domain.Car;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface DBCarsRepository extends CrudRepository<Car, Integer> {
     List<Car> findToPage(int num);
 
     @Modifying
-    @Query(value = "SELECT * FROM cars WHERE brand = ? and model = ? and mechanicgear = ? "
+    @Query(value = "SELECT * FROM cars WHERE brand = ? and model = ? and mechanic_gear = ? "
             + "and power >= ? and power <= ? "
             + "and price >= ? and price <= ? "
             + "and year >= ? and year <= ?"
@@ -44,7 +44,7 @@ public interface DBCarsRepository extends CrudRepository<Car, Integer> {
                                                                              int powerFrom, int powerTo, int priceFrom,
                                                                              int priceTO, int yearFrom, int yearTO);
     @Modifying
-    @Query(value = "SELECT * FROM cars WHERE brand = ? and mechanicgear = ? "
+    @Query(value = "SELECT * FROM cars WHERE brand = ? and mechanic_gear = ? "
             + "and power >= ? and power <= ? "
             + "and price >= ? and price <= ? "
             + "and year >= ? and year <= ?"
@@ -68,7 +68,7 @@ public interface DBCarsRepository extends CrudRepository<Car, Integer> {
                                                                      int priceTO, int yearFrom, int yearTO);
 
     @Modifying
-    @Query(value = "SELECT * FROM cars WHERE mechanicgear = ? "
+    @Query(value = "SELECT * FROM cars WHERE mechanic_gear = ? "
             + "and power >= ? and power <= ? "
             + "and price >= ? and price <= ? "
             + "and year >= ? and year <= ?"

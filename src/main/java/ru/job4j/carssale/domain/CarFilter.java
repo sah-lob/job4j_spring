@@ -1,6 +1,5 @@
-package ru.job4j.carssale.models;
+package ru.job4j.carssale.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CarFilter {

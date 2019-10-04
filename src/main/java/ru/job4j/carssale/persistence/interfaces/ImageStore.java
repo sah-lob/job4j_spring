@@ -1,6 +1,6 @@
 package ru.job4j.carssale.persistence.interfaces;
 
-import ru.job4j.carssale.models.Image;
+import ru.job4j.carssale.domain.Image;
 
 public interface ImageStore {
 

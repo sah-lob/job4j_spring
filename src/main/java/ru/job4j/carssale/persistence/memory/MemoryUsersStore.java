@@ -1,7 +1,7 @@
 package ru.job4j.carssale.persistence.memory;
 
 import org.springframework.stereotype.Component;
-import ru.job4j.carssale.models.Person;
+import ru.job4j.carssale.domain.Person;
 import ru.job4j.carssale.persistence.interfaces.UsersStore;
 
 import java.util.HashMap;

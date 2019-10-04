@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="UTF-8">
     <title>Select a car</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./resource/css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css" />
 <script>
     function leftFree() {
         return (($('#login1').val() == '') && ($('#password').val() == '') && ($('#password2').val() == ''));
@@ -61,11 +61,12 @@
 
             $.ajax({
                 method: "POST",
-                url:  'loginValidate.do',
+                url:  'loginValidate',
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 async: false
             }).done(function(response){
+                alert("hello world");
                 nals = response;
             });
             if (nals != "") {
@@ -89,7 +90,12 @@
         <br>
         <hr>
         <div class="row">
-                    <form id="appointment-form" onsubmit="return sendData()" method="post" action="login.do">
+<!--                    <form id="appointment-form" onsubmit="return sendData()">-->
+<!--            <form id="appointment-form" onsubmit="return sendData()" method="post" action="login">-->
+
+<!--            <form class="form-signin" onsubmit="return sendData()" action="#" th:action="@{/login}" method="post">-->
+                <form class="form-signin" action="#" th:action="@{/login}" method="post">
+<!--                <form action="/login" method="post">-->
                 <fieldset>
                     <p class="pull-center"> Зарегистрируйтесь: </p>
                     <div class="form-group">

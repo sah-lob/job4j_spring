@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./resource/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
     <script>
 
         $(
@@ -31,7 +31,7 @@
                 + "&yearFrom=" + yearFrom
                 + "&yearTo=" + yearTo;
             $.ajax(
-                "json.do?page=" + page
+                "/json?page=" + page
                 + toGetData).done(function (data) {
                 var resBody = "";
 
@@ -55,7 +55,7 @@
                             "<div class=\"car_table\">\n" +
                             "<div class=\"left_car_table\" id='ped" + car.id + "'>\n" +
                             "</div>\n" +
-                            "<div onclick=\"window.location.href='selectCar.do?id="+ car.id + "&page=" + page + "'\" class=\"right_car_table\">\n" +
+                            "<div onclick=\"window.location.href='selectCar?id="+ car.id + "&page=" + page + "'\" class=\"right_car_table\">\n" +
                             "<h4>" + brand + " " + model + "</h4>\n" +
                             "<h4>" + price  + " Р</h4>\n";
                         unloadImage(car.id);
@@ -81,7 +81,7 @@
         }
 
         function unloadImage(id) {
-            $.ajax("img.do?id=" + id).done(function (data) {
+            $.ajax("img?id=" + id).done(function (data) {
                 var ncarimg = data[0].id;
 
                 var result = "<div class=\"left_car_table\" id='ped'>\n" +
@@ -175,7 +175,7 @@
 
         function brand2(brand) {
             var result;
-            $.ajax("brand.do").done(function (data) {
+            $.ajax("/brand").done(function (data) {
                 result = "<option value=\'-1\'>Не выбрано</option>\n";
                 if (data.length == 0) {
                     brand2(brand);
@@ -197,7 +197,7 @@
             var bb = brand.value.toString();
             var result =
                 "<option value=\"-1\">Не выбрано</option>\n";
-            $.ajax("model.do?br=" + bb).done(function (data) {
+            $.ajax("model?br=" + bb).done(function (data) {
                 for (var i = 0; i < data.length; ++i) {
                     var bb = data[i].model;
                     var model = bb.model2;
@@ -317,7 +317,7 @@
             <button type="button" class="btn-success" id="findButton" onclick="checkMe()">Найти</button>
             <br>
             <br>
-            <button type="button" class="btn-success" id="newCar" onclick="window.location='newCar.do'">Добавить автомобиль</button>
+            <button type="button" class="btn-success" id="newCar" onclick="window.location='newCar'">Добавить автомобиль</button>
         </div>
 		<div class="main">
             <div class="cars">

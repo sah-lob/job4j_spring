@@ -1,22 +1,22 @@
-package ru.job4j.carssale.controller;
+package ru.job4j.carssale.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.job4j.carssale.models.Car;
-import ru.job4j.carssale.models.CarFilter;
-import ru.job4j.carssale.models.Person;
+import org.springframework.stereotype.Controller;
 import ru.job4j.carssale.persistence.CarController;
-import javax.servlet.http.HttpServletRequest;
+import ru.job4j.carssale.domain.CarFilter;
+import ru.job4j.carssale.domain.Person;
+import ru.job4j.carssale.domain.Car;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -207,14 +207,6 @@ public class MainController {
         var car = new Car(brand, model, price, korobka, power, year, login);
         controller.addData(car, image);
         return "index";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String json(@RequestParam(value = "login1", required = false) String e, @RequestParam(value = "error", required = false) String error) {
-        if (error != null) {
-            System.out.println("ошибочка вышла");
-        }
-        return "login";
     }
 
     @RequestMapping(value = "/loginValidate", method = RequestMethod.POST)

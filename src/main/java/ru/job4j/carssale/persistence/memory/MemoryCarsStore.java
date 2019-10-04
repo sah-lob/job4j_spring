@@ -1,9 +1,9 @@
 package ru.job4j.carssale.persistence.memory;
 
 import org.springframework.stereotype.Component;
-import ru.job4j.carssale.models.Car;
-import ru.job4j.carssale.models.CarFilter;
-import ru.job4j.carssale.models.MemoryIndexesOnPage;
+import ru.job4j.carssale.domain.Car;
+import ru.job4j.carssale.domain.CarFilter;
+import ru.job4j.carssale.domain.MemoryIndexesOnPage;
 import ru.job4j.carssale.persistence.interfaces.CarsStore;
 import java.util.ArrayList;
 import java.util.LinkedList;

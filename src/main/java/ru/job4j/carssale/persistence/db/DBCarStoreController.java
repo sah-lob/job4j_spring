@@ -2,7 +2,7 @@ package ru.job4j.carssale.persistence.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.job4j.carssale.models.*;
+import ru.job4j.carssale.domain.*;
 import ru.job4j.carssale.persistence.interfaces.*;
 import java.util.List;
 

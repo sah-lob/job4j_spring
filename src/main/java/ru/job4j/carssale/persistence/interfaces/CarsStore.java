@@ -1,7 +1,7 @@
 package ru.job4j.carssale.persistence.interfaces;
 
-import ru.job4j.carssale.models.Car;
-import ru.job4j.carssale.models.CarFilter;
+import ru.job4j.carssale.domain.Car;
+import ru.job4j.carssale.domain.CarFilter;
 import java.util.List;
 
 public interface CarsStore {

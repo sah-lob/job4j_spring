@@ -1,4 +1,4 @@
-package ru.job4j.carssale.models;
+package ru.job4j.carssale.domain;
 
 import javax.persistence.*;
 import java.util.Objects;
