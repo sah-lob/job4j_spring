@@ -33,6 +33,7 @@ public class CarFilter {
 
         this.page = Integer.valueOf(page);
         String un = "";
+        System.out.println(priceFrom);
         if (brand.equals(un) && model.equals(un)
                 && priceFrom.equals(un) && priceTo.equals(un)
                 && (korobka.equals(un) || korobka.equals("none"))
@@ -87,8 +88,39 @@ public class CarFilter {
 
     }
 
-    private boolean equals(String string) {
-        return string.equals("") || string.equals("none") || string.equals("undefined");
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        return o instanceof CarFilter
+                && ((CarFilter) o).page == page
+                && ((CarFilter) o).carId == carId
+                && ((CarFilter) o).brand.equals(brand)
+                && ((CarFilter) o).model.equals(model)
+                && ((CarFilter) o).priceFrom == priceFrom
+                && ((CarFilter) o).priceTo == priceTo
+                && ((CarFilter) o).korobka.equals(korobka)
+                && ((CarFilter) o).powerFrom == powerFrom
+                && ((CarFilter) o).powerTo == powerTo
+                && ((CarFilter) o).yearFrom == yearFrom
+                && ((CarFilter) o).yearTo == yearTo;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return page
+                + carId
+                + brand.hashCode()
+                + model.hashCode()
+                + priceFrom
+                + priceTo
+                + korobka.hashCode()
+                + powerFrom
+                + powerTo
+                + yearFrom
+                + yearTo;
     }
 
     public boolean isFilter() {

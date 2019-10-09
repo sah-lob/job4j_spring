@@ -40,11 +40,18 @@
                     + "&year=" + year
                     + "&fio=" + fio
                     + "&phone=" + phone;
+
+                var nals;
                 $.ajax({
-                    method: "post",
-                    url: "new",
-                    data: date
+                    method: 'POST',
+                    url: 'newCar',
+                    data: date,
+                }).done(function(response){
+                    nals = response;
                 });
+                if (nals != "") {
+                    window.location.href = "./";
+                }
             }
 
         </script>
@@ -98,7 +105,7 @@
                     <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
                 </div>
                 <br>
-                <button type="button" class="btn-success" id="button" onclick="saveInfo()">Добавить автомобиль</button>
+                <button type="submit" class="btn-success" id="button" onclick="saveInfo()" formaction="#">Добавить автомобиль</button>
             </div>
         </div>
     </body>

@@ -11,15 +11,19 @@
     function leftFree() {
         return (($('#login1').val() == '') && ($('#password').val() == '') && ($('#password2').val() == ''));
     }
+
     function rightFree() {
         return ($('#login2').val() == '') && ($('#password3').val() == '');
     }
+
     function leftFull() {
         return (($('#login1').val() != '') && ($('#password').val() != '') && ($('#password2').val() != ''));
     }
+
     function rightFull() {
         return (($('#login2').val() != '') && ($('#password3').val() != ''));
     }
+
     function validate() {
         var message = '';
         var result = true;
@@ -40,6 +44,7 @@
         }
         return result;
     }
+
     function sendData() {
         var finish = false;
         if (validate()) {
@@ -90,12 +95,7 @@
         <br>
         <hr>
         <div class="row">
-<!--                    <form id="appointment-form" onsubmit="return sendData()">-->
-<!--            <form id="appointment-form" onsubmit="return sendData()" method="post" action="login">-->
-
-<!--            <form class="form-signin" onsubmit="return sendData()" action="#" th:action="@{/login}" method="post">-->
-                <form class="form-signin" action="#" th:action="@{/login}" method="post">
-<!--                <form action="/login" method="post">-->
+            <form class="form-signin" onsubmit="return sendData()" action="#" th:action="@{/login}" method="post">
                 <fieldset>
                     <p class="pull-center"> Зарегистрируйтесь: </p>
                     <div class="form-group">

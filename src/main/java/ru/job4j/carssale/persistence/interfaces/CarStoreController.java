@@ -1,13 +1,13 @@
 package ru.job4j.carssale.persistence.interfaces;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.job4j.carssale.domain.Car;
 import ru.job4j.carssale.domain.CarFilter;
 import ru.job4j.carssale.domain.Image;
 import ru.job4j.carssale.domain.Person;
 import java.util.List;
 
-@Component
 public interface CarStoreController {
 
     void addData(Car car, String img);

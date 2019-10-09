@@ -2,11 +2,13 @@ package ru.job4j.carssale.persistence.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.job4j.carssale.domain.*;
 import ru.job4j.carssale.persistence.interfaces.*;
 import java.util.List;
 
-@Component
+//@Component
+@Service
 public class DBCarStoreController implements CarStoreController {
 
     @Autowired

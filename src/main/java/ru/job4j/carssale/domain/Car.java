@@ -29,6 +29,17 @@ public class Car {
         this.owner = owner;
     }
 
+    public Car(String id, String brand, String model, int price, boolean mechanicGear, int power, int year, String owner) {
+        this.id = Integer.parseInt(id);
+        this.brand = brand;
+        this.model = model;
+        this.price = price;
+        this.mechanicGear = mechanicGear;
+        this.power = power;
+        this.year = year;
+        this.owner = owner;
+    }
+
     public Car(String brand, String model, String price, String mechanicGear, String power, String year, String owner) {
         this.brand = brand;
         this.model = model;

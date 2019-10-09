@@ -3,6 +3,7 @@ package ru.job4j.carssale.persistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.job4j.carssale.domain.Car;
 import ru.job4j.carssale.domain.CarFilter;
 import ru.job4j.carssale.domain.Image;
@@ -11,10 +12,9 @@ import ru.job4j.carssale.persistence.interfaces.CarStoreController;
 
 import java.util.List;
 
+//@Service
 @Component
 public class CarController implements CarStoreController {
-
-//    @Qualifier("memoryCarStoreController")
 
     @Autowired
     @Qualifier("DBCarStoreController")

@@ -3,10 +3,12 @@ package ru.job4j.carssale.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.job4j.carssale.persistence.CarController;
 import ru.job4j.carssale.domain.CarFilter;
 import ru.job4j.carssale.domain.Person;
@@ -15,11 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.TreeMap;
 import java.util.List;
 
 @Controller
-public class MainController {
+public class  MainController {
 
     @Autowired
     private CarController controller;
@@ -30,7 +33,7 @@ public class MainController {
         var pw = resp.getWriter();
         var page = Integer.valueOf(req.getParameter("page"));
         var carId = req.getParameter("carID");
-        boolean filterCarID = (carId.equals("undefined") || carId.equals(""));
+        var filterCarID = (carId.equals("undefined") || carId.equals(""));
         List<Car> cars;
         var newID = -2;
         CarFilter carFilter = null;
@@ -47,10 +50,8 @@ public class MainController {
             params.add(req.getParameter("powerTo"));
             params.add(req.getParameter("yearFrom"));
             params.add(req.getParameter("yearTo"));
-
             carFilter = new CarFilter(params);
             cars = controller.carsParamFindPage(carFilter);
-
             if (!cars.isEmpty()) {
                 newID = cars.get(cars.size() - 1).getId();
             }
@@ -108,7 +109,8 @@ public class MainController {
     public void brandGet(HttpServletResponse resp) throws IOException {
         resp.setContentType("text/json");
         var pw = resp.getWriter();
-        var brands = controller.getBrands();
+        ArrayList<String> brands = (ArrayList<String>) controller.getBrands();
+        Collections.sort(brands);
         var brandMap = new TreeMap<Integer, String>();
         var i = 0;
         for (var brand : brands) {
@@ -190,11 +192,13 @@ public class MainController {
         pw.flush();
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String newPost(HttpServletRequest req) {
+    @PostMapping("/newCar")
+    public RedirectView newPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         var image = req.getParameter("string");
         var brand = req.getParameter("brand");
+        brand = brand.toLowerCase();
         var model = req.getParameter("model");
+        model = model.toLowerCase();
         var price = req.getParameter("price");
         var korobka = req.getParameter("korobka");
         var power = req.getParameter("power");
@@ -206,7 +210,10 @@ public class MainController {
         controller.editPerson(login, fio, phone);
         var car = new Car(brand, model, price, korobka, power, year, login);
         controller.addData(car, image);
-        return "index";
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("index");
+        resp.getWriter().write("success");
+        return redirectView;
     }
 
     @RequestMapping(value = "/loginValidate", method = RequestMethod.POST)
