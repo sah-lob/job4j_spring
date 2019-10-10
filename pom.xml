@@ -32,6 +32,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>11</release>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
                 <executions>
@@ -55,17 +65,25 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.heroku.sdk</groupId>
-                <artifactId>heroku-maven-plugin</artifactId>
-                <version>2.0.12</version>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.heroku.sdk</groupId>-->
+<!--                <artifactId>heroku-maven-plugin</artifactId>-->
+<!--                <version>2.0.12</version>-->
+<!--                <configuration>-->
+<!--                    <jdkVersion>11</jdkVersion>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
+
+
     <properties>
+        <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <parent>
@@ -272,11 +290,20 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.heroku.sdk/heroku-maven-plugin -->
-        <dependency>
-            <groupId>com.heroku.sdk</groupId>
-            <artifactId>heroku-maven-plugin</artifactId>
-            <version>2.0.12</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.heroku.sdk</groupId>-->
+<!--            <artifactId>heroku-maven-plugin</artifactId>-->
+<!--            <version>2.0.12</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.heroku.sdk/heroku-deploy-complete -->
+
+<!--        <dependency>-->
+<!--            <groupId>com.heroku.sdk</groupId>-->
+<!--            <artifactId>heroku-deploy-complete</artifactId>-->
+<!--            <version>2.0.12</version>-->
+<!--        </dependency>-->
+
+
     </dependencies>
 
     <dependencyManagement>
@@ -290,5 +317,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>
