@@ -31,7 +31,6 @@
             }
 
             function uploadFile(base64String, brand, model, price, korobka, power, year, fio, phone) {
-                alert("hello");
                 var data = "string=" + base64String
                     + "&brand=" + brand
                     + "&model=" + model
@@ -42,17 +41,26 @@
                     + "&fio=" + fio
                     + "&phone=" + phone;
 
-                var nals;
-                $.ajax({
-                    method: 'POST',
-                    url: 'newCar',
-                    data: data,
-                    // contentType: 'application/json',
-                    // contentType: 'text/plain',
-                }).done(function(response){
-                    alert("Ваша машина успешно добавлена!");
-                    nals = response;
+                // data = {
+                //     "login": $('#login1').val(),
+                //     "password": $('#password').val(),
+                //     "description": 'N'
+                // };
+                //
+                $.ajax("addNewCar?" + data).done(function (data) {
+                   alert(data);
                 });
+                // var nals;
+                // $.ajax({
+                //     method: 'GET',
+                //     url: 'addNewCar',
+                //     data: data
+                //     // contentType: 'application/json',
+                //     // contentType: 'text/plain',
+                // }).done(function(response){
+                //     alert("Ваша машина успешно добавлена!");
+                //     nals = response;
+                // });
                 // $.ajax({
                 //     method: "POST",
                 //     url:  'loginValidate',
@@ -62,9 +70,7 @@
                 // }).done(function(response){
                 //     nals = response;
                 // });
-                if (nals != "") {
-                    window.location.href = "./";
-                }
+                window.location.href = "./";
             }
 
         </script>

@@ -3,10 +3,7 @@ package ru.job4j.carssale.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.job4j.carssale.persistence.CarController;
@@ -192,12 +189,12 @@ public class  MainController {
         pw.flush();
     }
 
-    @PostMapping("/newCar")
+    @GetMapping("/addNewCar")
     public RedirectView newPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        var sb = new StringBuilder();
 //        var mapper = new ObjectMapper();
 //        var person = mapper.readValue(sb.toString(), Person.class);
-        System.out.println(req.getReader());
+        System.out.println("а я тут был");
         var image = req.getParameter("string");
         var brand = req.getParameter("brand");
         brand = brand.toLowerCase();
