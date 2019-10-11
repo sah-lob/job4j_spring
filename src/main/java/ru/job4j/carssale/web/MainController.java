@@ -226,6 +226,8 @@ public class  MainController {
         }
         var mapper = new ObjectMapper();
         var person = mapper.readValue(sb.toString(), Person.class);
+        person.setActive(true);
+        person.setRole("ROLE_ADMIN");
         if (person.getDescription().equals("N")) {
             if (controller.userIsExists(person.getLogin())) {
                 var s = "Данный логин уже зарегистрирован.";
