@@ -31,17 +31,6 @@
             }
 
             function uploadFile(base64String, brand, model, price, korobka, power, year, fio, phone) {
-
-                // var data = "string=" + base64String
-                //     + "&brand=" + brand
-                //     + "&model=" + model
-                //     + "&price=" + price
-                //     + "&korobka=" + korobka
-                //     + "&power=" + power
-                //     + "&year=" + year
-                //     + "&fio=" + fio
-                //     + "&phone=" + phone;
-
                 var data = {
                     "string": base64String,
                     "brand": brand,
@@ -53,27 +42,6 @@
                     "fio": fio,
                     "phone": phone
                 };
-                // data = {
-                //     "login": $('#login1').val(),
-                //     "password": $('#password').val(),
-                //     "description": 'N'
-                // };
-                //
-                // $.ajax("addNewCar?" + data).done(function (data) {
-                //    // alert(data);
-                //     window.location.href = "./";
-                // });
-                // var nals;
-                // $.ajax({
-                //     method: 'GET',
-                //     url: 'addNewCar',
-                //     data: data
-                //     // contentType: 'application/json',
-                //     // contentType: 'text/plain',
-                // }).done(function(response){
-                //     alert("Ваша машина успешно добавлена!");
-                //     nals = response;
-                // });
                 $.ajax({
                     method: "POST",
                     url:  'newCar',
