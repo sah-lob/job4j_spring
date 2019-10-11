@@ -1,5 +1,7 @@
 package ru.job4j.carssale.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -11,6 +13,8 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int carID;
+
+    @Type(type = "text")
     private String image;
 
     public Image(int carID, String image) {

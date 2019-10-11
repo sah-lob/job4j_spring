@@ -26,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/css/login*", "/login*").permitAll()
+//                .antMatchers("/css/login*", "/login*", "/newCar*").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -52,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
+//        web.ignoring().antMatchers("/loginValidate", "/newCar");
         web.ignoring().antMatchers("/loginValidate");
     }
 }

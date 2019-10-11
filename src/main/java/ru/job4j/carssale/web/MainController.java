@@ -194,6 +194,10 @@ public class  MainController {
 
     @PostMapping("/newCar")
     public RedirectView newPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//        var sb = new StringBuilder();
+//        var mapper = new ObjectMapper();
+//        var person = mapper.readValue(sb.toString(), Person.class);
+        System.out.println(req.getReader());
         var image = req.getParameter("string");
         var brand = req.getParameter("brand");
         brand = brand.toLowerCase();
@@ -206,6 +210,7 @@ public class  MainController {
         var fio = req.getParameter("fio");
         var phone = req.getParameter("phone");
         image = image.replaceAll(" ", "+");
+        System.out.println(brand);
         var login = SecurityContextHolder.getContext().getAuthentication().getName();
         controller.editPerson(login, fio, phone);
         var car = new Car(brand, model, price, korobka, power, year, login);
@@ -260,6 +265,7 @@ public class  MainController {
 
     @RequestMapping(value = "/newCar", method = RequestMethod.GET)
     public String newCar() {
+        System.out.println("hello again");
         return "newCar";
     }
 }

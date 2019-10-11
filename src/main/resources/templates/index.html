@@ -177,9 +177,9 @@
             var result;
             $.ajax("/brand").done(function (data) {
                 result = "<option value=\'-1\'>Не выбрано</option>\n";
-                if (data.length == 0) {
-                    brand2(brand);
-                }
+                // if (data.length == 0) {
+                //     brand2(brand);
+                // }
                 for (var i = 0; i < data.length; ++i) {
                     var bb = data[i].brand;
                     var brand3 = bb.brand2;

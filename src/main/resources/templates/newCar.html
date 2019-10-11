@@ -31,7 +31,8 @@
             }
 
             function uploadFile(base64String, brand, model, price, korobka, power, year, fio, phone) {
-                var date = "string=" + base64String
+                alert("hello");
+                var data = "string=" + base64String
                     + "&brand=" + brand
                     + "&model=" + model
                     + "&price=" + price
@@ -45,10 +46,22 @@
                 $.ajax({
                     method: 'POST',
                     url: 'newCar',
-                    data: date,
+                    data: data,
+                    // contentType: 'application/json',
+                    // contentType: 'text/plain',
                 }).done(function(response){
+                    alert("Ваша машина успешно добавлена!");
                     nals = response;
                 });
+                // $.ajax({
+                //     method: "POST",
+                //     url:  'loginValidate',
+                //     data: JSON.stringify(data),
+                //     contentType: "application/json",
+                //     async: false
+                // }).done(function(response){
+                //     nals = response;
+                // });
                 if (nals != "") {
                     window.location.href = "./";
                 }
