@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.job4j.carssale.domain.NewCar;
 import ru.job4j.carssale.persistence.CarController;
 import ru.job4j.carssale.domain.CarFilter;
 import ru.job4j.carssale.domain.Person;
@@ -189,23 +190,44 @@ public class  MainController {
         pw.flush();
     }
 
-    @GetMapping("/addNewCar")
+    @PostMapping("/newCar")
     public RedirectView newPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        var sb = new StringBuilder();
-//        var mapper = new ObjectMapper();
-//        var person = mapper.readValue(sb.toString(), Person.class);
-        System.out.println("а я тут был");
-        var image = req.getParameter("string");
-        var brand = req.getParameter("brand");
+
+        var sb = new StringBuilder();
+        try (var reader = req.getReader()) {
+            if (reader != null) {
+                sb.append(reader.readLine());
+            }
+        }
+
+        var mapper = new ObjectMapper();
+        var newCar = mapper.readValue(sb.toString(), NewCar.class);
+
+        var image = newCar.getString();
+        var brand = newCar.getBrand();
         brand = brand.toLowerCase();
-        var model = req.getParameter("model");
+        var model = newCar.getModel();
         model = model.toLowerCase();
-        var price = req.getParameter("price");
-        var korobka = req.getParameter("korobka");
-        var power = req.getParameter("power");
-        var year = req.getParameter("year");
-        var fio = req.getParameter("fio");
-        var phone = req.getParameter("phone");
+        var price = newCar.getPrice();
+        var korobka = newCar.getKorobka();
+        var power = newCar.getPower();
+        var year = newCar.getYear();
+        var fio = newCar.getFio();
+        var phone = newCar.getPhone();
+
+//        System.out.println("а я тут был");
+//        var image = req.getParameter("string");
+//        var brand = req.getParameter("brand");
+//        brand = brand.toLowerCase();
+//        var model = req.getParameter("model");
+//        model = model.toLowerCase();
+//        var price = req.getParameter("price");
+//        var korobka = req.getParameter("korobka");
+//        var power = req.getParameter("power");
+//        var year = req.getParameter("year");
+//        var fio = req.getParameter("fio");
+//        var phone = req.getParameter("phone");
+
         image = image.replaceAll(" ", "+");
         System.out.println(brand);
         var login = SecurityContextHolder.getContext().getAuthentication().getName();

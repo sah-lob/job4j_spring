@@ -31,26 +31,38 @@
             }
 
             function uploadFile(base64String, brand, model, price, korobka, power, year, fio, phone) {
-                var data = "string=" + base64String
-                    + "&brand=" + brand
-                    + "&model=" + model
-                    + "&price=" + price
-                    + "&korobka=" + korobka
-                    + "&power=" + power
-                    + "&year=" + year
-                    + "&fio=" + fio
-                    + "&phone=" + phone;
 
+                // var data = "string=" + base64String
+                //     + "&brand=" + brand
+                //     + "&model=" + model
+                //     + "&price=" + price
+                //     + "&korobka=" + korobka
+                //     + "&power=" + power
+                //     + "&year=" + year
+                //     + "&fio=" + fio
+                //     + "&phone=" + phone;
+
+                var data = {
+                    "string": base64String,
+                    "brand": brand,
+                    "model": model,
+                    "price": price,
+                    "korobka": korobka,
+                    "power": power,
+                    "year": year,
+                    "fio": fio,
+                    "phone": phone
+                };
                 // data = {
                 //     "login": $('#login1').val(),
                 //     "password": $('#password').val(),
                 //     "description": 'N'
                 // };
                 //
-                $.ajax("addNewCar?" + data).done(function (data) {
-                   // alert(data);
-                    window.location.href = "./";
-                });
+                // $.ajax("addNewCar?" + data).done(function (data) {
+                //    // alert(data);
+                //     window.location.href = "./";
+                // });
                 // var nals;
                 // $.ajax({
                 //     method: 'GET',
@@ -62,16 +74,16 @@
                 //     alert("Ваша машина успешно добавлена!");
                 //     nals = response;
                 // });
-                // $.ajax({
-                //     method: "POST",
-                //     url:  'loginValidate',
-                //     data: JSON.stringify(data),
-                //     contentType: "application/json",
-                //     async: false
-                // }).done(function(response){
-                //     nals = response;
-                // });
-
+                $.ajax({
+                    method: "POST",
+                    url:  'newCar',
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    async: false
+                }).done(function(response){
+                    nals = response;
+                });
+                window.location.href = "./";
             }
 
         </script>

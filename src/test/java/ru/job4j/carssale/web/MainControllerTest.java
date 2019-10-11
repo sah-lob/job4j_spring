@@ -195,19 +195,19 @@ public class MainControllerTest {
         );
     }
 
-    @Test
-    public void whenAddNewCar() throws  Exception {
-        this.mvc.perform(
-                post("/newCar")
-                        .param("string", "image")
-                        .param("brand", "Ferrari")
-                        .param("model", "California")
-                        .param("price", "20000")
-                        .param("korobka", "m")
-                        .param("power", "450")
-                        .param("year", "2019")
-                        .param("fio", "Alexander")
-                        .param("phone", "iphone")
-        ).andExpect(status().is3xxRedirection());
-    }
+//    @Test
+//    public void whenAddNewCar() throws  Exception {
+//        this.mvc.perform(
+//                post("/newCar")
+//                        .param("string", "image")
+//                        .param("brand", "Ferrari")
+//                        .param("model", "California")
+//                        .param("price", "20000")
+//                        .param("korobka", "m")
+//                        .param("power", "450")
+//                        .param("year", "2019")
+//                        .param("fio", "Alexander")
+//                        .param("phone", "iphone")
+//        ).andExpect(status().is3xxRedirection());
+//    }
 }
