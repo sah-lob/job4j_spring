@@ -4,7 +4,7 @@
 
 Курс на job4j. 
 
-тут будет проект по Spring
+Ссылка на сайт: https://sah-lob-cars-store.herokuapp.com
 
 Ссылка на проект: http://job4j.ru/
 
